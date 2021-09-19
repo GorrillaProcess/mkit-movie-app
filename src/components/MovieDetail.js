@@ -1,64 +1,23 @@
 import React, { useState, useEffect } from "react";
-import {
-  fetchMovieDetail,
-  fetchMovieVideos,
-  fetchCasts,
-  fetchSimilarMovie,
-} from "../service";
+import {fetchMovieDetail} from "../service";
 import "react-bootstrap-carousel/dist/react-bootstrap-carousel.css";
 import ReactStars from "react-rating-stars-component";
-import { Link } from "react-router-dom";
 
 export function MovieDetail({ match }) {
   let params = match.params;
   let genres = [];
   const [isOpen, setIsOpen] = useState(false);
   const [detail, setDetail] = useState([]);
-  const [video, setVideo] = useState([]);
-  const [casts, setCasts] = useState([]);
-  const [similarMovie, setSimilarMovie] = useState([]);
 
   useEffect(() => {
     const fetchAPI = async () => {
       setDetail(await fetchMovieDetail(params.id));
-      setVideo(await fetchMovieVideos(params.id));
-      setCasts(await fetchCasts(params.id));
-      setSimilarMovie(await fetchSimilarMovie(params.id));
     };
 
     fetchAPI();
   }, [params.id]);
 
   genres = detail.genres;
-
-  // const MoviePalyerModal = (props) => {
-  //   const youtubeUrl = "https://www.youtube.com/watch?v=";
-  //   return (
-  //     <Modal
-  //       {...props}
-  //       size="lg"
-  //       aria-labelledby="contained-modal-title-vcenter"
-  //       centered
-  //     >
-  //       <Modal.Header closeButton>
-  //         <Modal.Title
-  //           id="contained-modal-title-vcenter"
-  //           style={{ color: "#000000", fontWeight: "bolder" }}
-  //         >
-  //           {detail.title}
-  //         </Modal.Title>
-  //       </Modal.Header>
-  //       <Modal.Body style={{ backgroundColor: "#000000" }}>
-  //         <ReactPlayer
-  //           className="container-fluid"
-  //           url={youtubeUrl + video.key}
-  //           playing
-  //           width="100%"
-  //         ></ReactPlayer>
-  //       </Modal.Body>
-  //     </Modal>
-  //   );
-  // };
 
   let genresList;
   if (genres) {
@@ -72,56 +31,9 @@ export function MovieDetail({ match }) {
       );
     });
   }
-
-  // const castList = casts.slice(0, 4).map((c, i) => {
-  //   return (
-  //     <div className="col-md-3 text-center" key={i}>
-  //       <img
-  //         className="img-fluid rounded-circle mx-auto d-block"
-  //         src={c.img}
-  //         alt={c.name}
-  //       ></img>
-  //       <p className="font-weight-bold text-center">{c.name}</p>
-  //       <p
-  //         className="font-weight-light text-center"
-  //         style={{ color: "#5a606b" }}
-  //       >
-  //         {c.character}
-  //       </p>
-  //     </div>
-  //   );
-  // });
-
-  // const similarMovieList = similarMovie.slice(0, 4).map((item, index) => {
-  //   return (
-  //     <div className="col-md-3 col-sm-6" key={index}>
-  //       <div className="card">
-  //         <Link to={`/movie/${item.id}`}>
-  //           <img className="img-fluid" src={item.poster} alt={item.title}></img>
-  //         </Link>
-  //       </div>
-  //       <div className="mt-3">
-  //         <p style={{ fontWeight: "bolder" }}>{item.title}</p>
-  //         <p>Rated: {item.rating}</p>
-  //         <ReactStars
-  //           count={item.rating}
-  //           size={20}
-  //           color1={"#f4c10f"}
-  //         ></ReactStars>
-  //       </div>
-  //     </div>
-  //   );
-  // });
-
   return (
     <div className="container">
       <div className="row mt-2">
-        {/* <MoviePalyerModal
-          show={isOpen}
-          onHide={() => {
-            setIsOpen(false);
-          }}
-        ></MoviePalyerModal> */}
         <div className="col text-center" style={{ width: "100%" }}>
           <img
             className="img-fluid"
@@ -190,13 +102,6 @@ export function MovieDetail({ match }) {
           <p style={{ color: "#f4c10f" }}>{detail.homepage}</p>
         </div>
       </div>
-
-      {/* <div className="row mt-3">
-        <div className="col">
-          <p style={{ color: "#5a606b", fontWeight: "bolder" }}>CASTS</p>
-        </div>
-      </div>
-      <div className="row mt-3">{castList}</div> */}
 
       <hr className="mt-5" style={{ borderTop: "1px solid #5a606b" }}></hr>
 
