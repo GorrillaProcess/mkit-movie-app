@@ -6,7 +6,6 @@ import ReactStars from "react-rating-stars-component";
 export function MovieDetail({ match }) {
   let params = match.params;
   let genres = [];
-  const [isOpen, setIsOpen] = useState(false);
   const [detail, setDetail] = useState([]);
 
   useEffect(() => {
@@ -40,17 +39,6 @@ export function MovieDetail({ match }) {
             src={`http://image.tmdb.org/t/p/original/${detail.poster_path}`}
             alt={detail.title}
           ></img>
-          <div className="carousel-center">
-            <i
-              onClick={() => setIsOpen(true)}
-              className="far fa-play-circle"
-              style={{ fontSize: 95, color: "#f4c10f", cursor: "pointer" }}
-            ></i>
-          </div>
-          <div
-            className="carousel-caption"
-            style={{ textAlign: "center", fontSize: 35 }}
-          >
             {detail.title}
           </div>
         </div>
